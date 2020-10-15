@@ -25,22 +25,26 @@ public class CorsFilter implements Filter {
 	@Autowired
 	private SalvavidasApiProperty salvavidasApiProperty;
 	
+	private String originPermitida =  "https://salvavidas-ui.herokuapp.com";
+	
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
 			throws IOException, ServletException {
 		
 		//String originPermitida = "http://localhost:4200"; //TODO: Configurar para diferentes ambientes		
-		String originPermitida = "https://salvavidas-ui.herokuapp.com";
+		//String originPermitida = "https://salvavidas-ui.herokuapp.com";
 			
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) resp;
 		
-		//response.setHeader("Access-Control-Allow-Origin", originPermitida);
+		response.setHeader("Access-Control-Allow-Origin", originPermitida);
+		response.setHeader("Access-Control-Allow-Origin", "originPermitida");
+		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setHeader("Access-Control-Allow-Origin", salvavidasApiProperty.getOriginPermitida());
 		response.setHeader("Access-Control-Allow-Credentials", "true");
 		
-		//if ("OPTIONS".contentEquals(request.getMethod()) && originPermitida.contentEquals(request.getHeader("Origin")) ) {
-		if ("OPTIONS".equals(request.getMethod()) && salvavidasApiProperty.getOriginPermitida().equals(request.getHeader("Origin")) ) {	
+		if ("OPTIONS".contentEquals(request.getMethod()) && originPermitida.contentEquals(request.getHeader("Origin")) ) {
+		//if ("OPTIONS".equals(request.getMethod()) && salvavidasApiProperty.getOriginPermitida().equals(request.getHeader("Origin")) ) {	
 			response.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS");
 			response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept");
 			response.setHeader("Access-Control-Max-Age", "3600");
