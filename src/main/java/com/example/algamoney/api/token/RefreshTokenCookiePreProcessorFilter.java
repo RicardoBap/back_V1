@@ -22,7 +22,6 @@ import org.springframework.stereotype.Component;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class RefreshTokenCookiePreProcessorFilter implements Filter {
 
-
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
@@ -30,7 +29,7 @@ public class RefreshTokenCookiePreProcessorFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		
 		if ("/oauth/token".equalsIgnoreCase(req.getRequestURI())
-				&& "refresh_token".contentEquals(req.getParameter("grant_type")) // TODO: <---- contentEquals
+				&& "refresh_token".equals(req.getParameter("grant_type")) // TODO: <---- contentEquals
 				&& req.getCookies() != null) {
 			for (Cookie cookie : req.getCookies()) {
 				if (cookie.getName().equals("refreshToken")) {
@@ -38,8 +37,7 @@ public class RefreshTokenCookiePreProcessorFilter implements Filter {
 					req = new MyServletRequestWrapper(req, refreshToken);
 				}
 			}
-		}
-		
+		}		
 		chain.doFilter(req, response);		
 	}
 	
