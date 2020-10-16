@@ -22,7 +22,7 @@ public class CorsFilter implements Filter {
 	//@Autowired
 	//private SalvavidasApiProperty salvavidasApiProperty;	
 	
-	private String originPermitida = "https://salvavidas-ui.herokuapp.com";
+	//private String originPermitida = "https://salvavidas-ui.herokuapp.com";
 	
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
@@ -32,20 +32,20 @@ public class CorsFilter implements Filter {
 		HttpServletResponse response = (HttpServletResponse) resp;		
 		
 		//response.setHeader("Access-Control-Allow-Origin", salvavidasApiProperty.getOriginPermitida());
-		response.setHeader("Access-Control-Allow-Origin", originPermitida);
+		response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
 		response.setHeader("Access-Control-Allow-Credentials", "true");		
 				
 		//if ("OPTIONS".equals(request.getMethod()) && salvavidasApiProperty.getOriginPermitida().equals(request.getHeader("Origin"))) {
-		if ("OPTIONS".equals(request.getMethod()) && originPermitida.equals(request.getHeader("Origin"))) {
+		//if ("OPTIONS".equals(request.getMethod()) && originPermitida.equals(request.getHeader("Origin"))) {
 			response.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS");
-			response.setHeader("Access-Control-Allow-Credentials", "true");
+			
 			response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept");
 			response.setHeader("Access-Control-Max-Age", "3600");
 			
-			response.setStatus(HttpServletResponse.SC_OK);
-		} else {
+			//response.setStatus(HttpServletResponse.SC_OK);
+		//} else {
 			chain.doFilter(req, resp);
-		}
+	//}
 		
 	}
 	
