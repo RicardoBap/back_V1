@@ -22,8 +22,8 @@ public class CorsFilter implements Filter {
 	//@Autowired
 	//private SalvavidasApiProperty salvavidasApiProperty;	
 	
-	private String originPermitida = "https://salvavidas-api.herokuapp.com"; //"http://localhost:4200"; // TODO: configurar para ambientes diferentes
-	
+	private String originPermitida = "https://salvavidas-ui.herokuapp.com"; //"http://localhost:4200"; // TODO: configurar para ambientes diferentes
+	                                  
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
 			throws IOException, ServletException {		
@@ -32,7 +32,7 @@ public class CorsFilter implements Filter {
 		HttpServletResponse response = (HttpServletResponse) resp;		
 		
 		response.setHeader("Access-Control-Allow-Origin", originPermitida);  //  salvavidasApiProperty.getOriginPermitida()
-		response.setHeader("Access-Control-Allow-Credentials", "true");					
+		response.setHeader("Access-Control-Allow-Credentials", "true");				
 		
 		if ("OPTIONS".equals(request.getMethod()) && originPermitida.equals(request.getHeader("Origin"))) {
 			response.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS"); // salvavidasApiProperty.getOriginPermitida()			
