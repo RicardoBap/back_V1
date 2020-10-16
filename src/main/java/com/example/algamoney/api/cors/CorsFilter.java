@@ -25,25 +25,7 @@ public class CorsFilter implements Filter {
 	@Autowired
 	private SalvavidasApiProperty salvavidasApiProperty;	
 	
-	/*
-	 @Override
-	    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
-	            throws IOException, ServletException {
-	 
-	        HttpServletRequest request = (HttpServletRequest) req;
-	        HttpServletResponse response = (HttpServletResponse) res;
-	 
-	        if (request.getHeader("Origin") != null) {
-	            response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
-	        }
-	 
-	        response.setHeader("Access-Control-Allow-Credentials", "true");
-	        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-	        response.setHeader("Access-Control-Max-Age", "3600");
-	        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");
-	 
-	        chain.doFilter(req, res);
-	    } */
+	//private String originPermitida = "http://localhost:4200"; // TODO: configurar para ambientes diferentes
 	
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
@@ -52,12 +34,11 @@ public class CorsFilter implements Filter {
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) resp;		
 		
-		response.setHeader("Access-Control-Allow-Origin", salvavidasApiProperty.getOriginPermitida());
+		response.setHeader("Access-Control-Allow-Origin", salvavidasApiProperty.getOriginPermitida() );  //  salvavidasApiProperty.getOriginPermitida()
 		response.setHeader("Access-Control-Allow-Credentials", "true");					
 		
 		if ("OPTIONS".equals(request.getMethod()) && salvavidasApiProperty.getOriginPermitida().equals(request.getHeader("Origin"))) {
-			response.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS");
-			response.setHeader("Access-Control-Allow-Credentials", "true");
+			response.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS"); // salvavidasApiProperty.getOriginPermitida()			
 			response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept");
 			response.setHeader("Access-Control-Max-Age", "3600");
 			
@@ -65,8 +46,7 @@ public class CorsFilter implements Filter {
 		} else {
 			chain.doFilter(req, resp);
 		}		
-	} 
-	
+	} 	
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {}	
@@ -75,3 +55,23 @@ public class CorsFilter implements Filter {
 	public void destroy() {}
 
 }
+
+/*
+@Override
+   public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+           throws IOException, ServletException {
+
+       HttpServletRequest request = (HttpServletRequest) req;
+       HttpServletResponse response = (HttpServletResponse) res;
+
+       if (request.getHeader("Origin") != null) {
+           response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+       }
+
+       response.setHeader("Access-Control-Allow-Credentials", "true");
+       response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+       response.setHeader("Access-Control-Max-Age", "3600");
+       response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");
+
+       chain.doFilter(req, res);
+   } */
