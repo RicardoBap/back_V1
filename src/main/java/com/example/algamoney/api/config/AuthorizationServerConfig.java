@@ -54,9 +54,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 			.tokenEnhancer(tokenEnhancerChain)
 			.reuseRefreshTokens(false)
 			.authenticationManager(authenticationManager);
-	}	
-
-
+	}
+	
 	@Bean
 	public JwtAccessTokenConverter accessTokenConverter() {
 		JwtAccessTokenConverter accessTokenConverter = new JwtAccessTokenConverter();
