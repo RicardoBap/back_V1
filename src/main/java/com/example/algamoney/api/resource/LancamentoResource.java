@@ -58,8 +58,7 @@ public class LancamentoResource {
 	@Autowired
 	private MessageSource messageSource;
 
-	//------------------------[ TESTE ]------------------------
-	
+	//------------------------[ Tesouraria ]------------------------	
 	@GetMapping("/relatorios/tesouraria")
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")	
 	public ResponseEntity<byte[]> relatorioTesouraria (
@@ -73,8 +72,7 @@ public class LancamentoResource {
 				.body(relatorio); 		
 	}
 
-	//-----------------------[ ok ] -------------------------------------
-	
+	//-----------------------[ ok ] -------------------------------------	
 	@GetMapping("/relatorios/por-pessoa")
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")	
 	public ResponseEntity<byte[]> relatorioPorPessoa(
